@@ -152,3 +152,8 @@ https://ja.reactjs.org/docs
 ## Error Boundary
 
 - error boundary とは
+- error boundary を配置すべき場所
+- エラーがキャッチされなかった場合の新しい動作
+- コンポーネントのスタックトレース
+- try/catch について
+- イベントハンドラについて
