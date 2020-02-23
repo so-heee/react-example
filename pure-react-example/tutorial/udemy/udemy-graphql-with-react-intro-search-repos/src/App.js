@@ -4,8 +4,9 @@ import{ Query } from 'react-apollo'
 import Client from './client'
 import { SEARCH_REPOSITORYS } from './graphql'
 
+const PER_PAGE = 5
 const DEFAULT_STATE = {
-  first: 5,
+  first: PER_PAGE,
   after: null,
   before: null,
   last: null,
@@ -25,6 +26,15 @@ class App extends Component {
     })
   }
 
+  goNext(search) {
+    this.setState({
+      first: PER_PAGE,
+      after: search.pageInfo.endCursor,
+      last: null,
+      before: null
+    })
+  }
+
   render() {
     const { query, first, last, before, after } = this.state
     console.log({query})
@@ -40,7 +50,7 @@ class App extends Component {
             ({ loading, error, data}) => {
               if (loading) return 'Loading...'
               if (error) return `Error!: ${error.message}`
-              console.log(data.search)
+
               const search = data.search
               const repositoryCount = search.repositoryCount
               const repositoryUnit = repositoryCount === 1 ? 'Repository' : 'Repositories'
@@ -54,12 +64,24 @@ class App extends Component {
                         const node = edge.node
                         return (
                           <li key={node.id}>
-                            <a href={node.url} target="_brank">{node.name}</a>
+                            <a href={node.url} target="_brank" rel="noopener noreferror">{node.name}</a>
                           </li>
                         )
                       })
                     }
                   </ul>
+
+                  {
+                    search.pageInfo.hasNextPage === true ?
+                    <button
+                      onClick={this.goNext.bind(this, search)}
+                    >
+                      Next
+                    </button>
+                    :
+                    null
+                  }
+
                 </React.Fragment>
               )
             }
