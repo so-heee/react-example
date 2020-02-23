@@ -1,10 +1,10 @@
 import React, { Component } from 'react'
 import{ ApolloProvider, Mutation, Query } from 'react-apollo'
 import Client from './client'
-import { ADD_STAR, REMOVE_STAR,SEARCH_REPOSITORYS } from './graphql'
+import { ADD_STAR, REMOVE_STAR,SEARCH_REPOSITORIES } from './graphql'
 
 const StarButton = props => {
-  const node = props.node
+  const {node, query, first, last, after, before} = props
   const totalCount = node.stargazers.totalCount
   const viewerHasStarred = node.viewerHasStarred
   const starCount = totalCount === 1 ? "1 star" : `${totalCount} stars`
@@ -22,7 +22,18 @@ const StarButton = props => {
     )
   }
   return (
-    <Mutation mutation={viewerHasStarred ? REMOVE_STAR : ADD_STAR}>
+    <Mutation
+      mutation={viewerHasStarred ? REMOVE_STAR : ADD_STAR}
+      refetchQueries={ mutationResult => {
+        console.log(mutationResult)
+        return [
+          {
+            query: SEARCH_REPOSITORIES,
+            variables: { query, first, last, before, after }
+          }
+        ]
+      }}
+    >
       {
         addOrRemoveStar => <StarStatus addOrRemoveStar={addOrRemoveStar} />
       }
@@ -78,7 +89,7 @@ class App extends Component {
           <input value={query} onChange={this.handleChange}></input>
         </form>
         <Query 
-          query={SEARCH_REPOSITORYS}
+          query={SEARCH_REPOSITORIES}
           variables={{ query, first, last, before, after}}>
           {
             ({ loading, error, data}) => {
@@ -100,7 +111,7 @@ class App extends Component {
                           <li key={node.id}>
                             <a href={node.url} target="_brank" rel="noopener noreferror">{node.name}</a>
                             &nbsp;
-                            <StarButton node={node}/>
+                            <StarButton node={node} {...{query, first, last, after, before}}/>
                           </li>
                         )
                       })
