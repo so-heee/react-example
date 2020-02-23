@@ -2,7 +2,6 @@ import React, { Component } from 'react'
 import { ApolloProvider } from 'react-apollo'
 import{ Query } from 'react-apollo'
 import Client from './client'
-import { ME } from './graphql'
 import { SEARCH_REPOSITORYS } from './graphql'
 
 const DEFAULT_STATE = {
@@ -41,8 +40,12 @@ class App extends Component {
             ({ loading, error, data}) => {
               if (loading) return 'Loading...'
               if (error) return `Error!: ${error.message}`
-              console.log(data)
-              return <div></div>
+              console.log(data.search)
+              const search = data.search
+              const repositoryCount = search.repositoryCount
+              const repositoryUnit = repositoryCount === 1 ? 'Repository' : 'Repositories'
+              const title = `GitHub Repositories Search Result - ${repositoryCount} ${repositoryUnit}`
+              return <h2>{ title }</h2>
             }
           }
         </Query>
