@@ -43,6 +43,7 @@ eslint@^6.6.0
 - prettier: Prettier (コード整形ツール)
 
 ```
+yarn add -D eslint-plugin-react-app eslint-config-prettier eslint-plugin-prettier husky lint-staged prettier 
 npm install --save-dev eslint-plugin-react-app eslint-config-prettier eslint-plugin-prettier husky lint-staged prettier
 ```
 
@@ -50,6 +51,7 @@ npm install --save-dev eslint-plugin-react-app eslint-config-prettier eslint-plu
 
 ```
 yarn run eslint --init
+npm run eslint --init
 ```
 
 ## prettierの設定
@@ -81,6 +83,32 @@ yarn run eslint --init
   },
 ```
 
+## 発生したエラーへの対応
+
+```
+  5:1  error  'test' is not defined    no-undef
+  8:3  error  'expect' is not defined  no-undef
+  24:7   error  'process' is not defined  no-undef
+  26:31  error  'process' is not defined  no-undef
+  35:24  error  'process' is not defined  no-undef
+```
+
+```.eslintrc.jsへ追記
+    node: true,
+    jest: true
+```
+
+```
+Warning: React version not specified in eslint-plugin-react settings. See https://github.com/yannickcr/eslint-plugin-react#configuration .
+```
+
+```.eslintrc.jsへ追記
+  settings: {
+    react: {
+      version: "detect"
+    }
+  }
+```
 
 ## 参考
 https://create-react-app.dev/docs/setting-up-your-editor/#formatting-code-automatically
