@@ -1,60 +1,63 @@
 # eslint-example
 
+前提知識としてcreate-react-appで作成したプロジェクトには
+既にreact-app(eslint-config-react-app)がESLintに設定されている
+
+https://www.npmjs.com/package/eslint-config-react-app
+
 create-react-appで作成したプロジェクトへESLint, Prettierへの適用手順をまとめる
+
+1. 既存のreact-appをpackage.jsonからeslintrcへ外だしする
+2. Airbnbを追加で適用する
+3. husky lint-staged prettierを追加で適用する
+4. TypeScriptを導入した場合
 
 create-react-appのversion
 3.4.0 (2020-02-14)
 
-## create-react-appに導入済みのパッケージを確認
+## Airbnbについて
 
-- eslint: ES Lint (lintツール)
-- eslint-plugin-react: React用のES Lint
-- babel-eslint: Babelを使っている際のLint用のパーサー
+「Airbnb」（エアビーアンドビー）‎製のJavaScript スタイルガイド
 
-```
-@types/eslint-visitor-keys@^1.0.0
-@typescript-eslint/eslint-plugin@^2.10.0
-@typescript-eslint/experimental-utils@2.19.2
-@typescript-eslint/parser@^2.10.0
-@typescript-eslint/typescript-estree@2.19.2
-babel-eslint@10.0.3
-eslint-config-react-app@^5.2.0
-eslint-import-resolver-node@^0.3.2
-eslint-loader@3.0.3
-eslint-module-utils@^2.4.1
-eslint-plugin-flowtype@4.6.0
-eslint-plugin-import@2.20.0
-eslint-plugin-jsx-a11y@6.2.3
-eslint-plugin-react-hooks@^1.6.1
-eslint-plugin-react@7.18.0
-eslint-scope@^4.0.3
-eslint-scope@^5.0.0
-eslint-utils@^1.4.3
-eslint-visitor-keys@^1.0.0, eslint-visitor-keys@^1.1.0
-eslint@^6.6.0
+翻訳
+https://mitsuruog.github.io/javascript-style-guide/
+
+## 1. 既存のreact-appをeslintrcへ外だしする
+
+eslintrcファイル（拡張子はjsonかjavascriptが良さそう）
+
+```javascript:eslintrc.js
+module.exports = {
+    extends: [
+        "react-app"
+    ]
+};
 ```
 
-## 追加で必要なパッケージを追加
+eslint --initなどでeslintrcファイルを作成しても良いが必要なのはこの部分のみ
+
+## 2. Airbnbを追加で適用する
+
+
+## 3. husky lint-staged prettierを追加で適用する
+
+#### 追加で必要なパッケージを追加
 
 - eslint-config-prettier: ES Lintのコード整形ルールを全て無効にする
 - eslint-plugin-prettier: PrettierをES Lint内で実行できるようにする
 - husky: gitのcommit時等に処理をhookできるようにする
-- lint-stagedcommit時の処理の際にgitにstagingされたものだけをlintする
+- lint-staged:commit時の処理の際にgitにstagingされたものだけをlintする
 - prettier: Prettier (コード整形ツール)
 
-```
+```:追加パッケージの導入
+// yarn
 yarn add -D eslint-plugin-react-app eslint-config-prettier eslint-plugin-prettier husky lint-staged prettier 
+
+// npm
 npm install --save-dev eslint-plugin-react-app eslint-config-prettier eslint-plugin-prettier husky lint-staged prettier
 ```
 
-## eslintの初期化を行う
-
-```
-yarn run eslint --init
-npm run eslint --init
-```
-
-## prettierの設定
+#### prettierの設定
 
 ```:.esllintrc.jsへ追記
     "extends": [
@@ -70,7 +73,7 @@ npm run eslint --init
     ],
 ```
 
-## husky, lint-stagedの設定
+#### husky, lint-stagedの設定
 
 ```:package.jsonへ追記
   "husky": {
@@ -83,7 +86,7 @@ npm run eslint --init
   },
 ```
 
-## 発生したエラーへの対応
+#### 発生したエラーへの対応
 
 ```
   5:1  error  'test' is not defined    no-undef
