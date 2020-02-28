@@ -1,34 +1,13 @@
 module.exports = {
-  env: {
-    browser: true,
-    es6: true,
-    node: true,
-    jest: true
-  },
-  extends: [
-    "eslint:recommended",
-    "plugin:react/recommended",
-    "plugin:prettier/recommended",
-    "prettier/react"
+  "extends": [
+      "react-app",
+      "plugin:prettier/recommended",
+      "prettier/react"
   ],
-  globals: {
-    Atomics: "readonly",
-    SharedArrayBuffer: "readonly"
-  },
-  parserOptions: {
-    ecmaFeatures: {
-      jsx: true
-    },
-    ecmaVersion: 2018,
-    sourceType: "module"
-  },
-  plugins: ["react", "prettier"],
-  rules: {
-    "prettier/prettier": "error"
-  },
-  settings: {
-    react: {
-      version: "detect"
-    }
+  "plugins": [
+      "prettier"
+  ],
+  "rules": {
+      "prettier/prettier": "error"
   }
 };
