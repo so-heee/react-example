@@ -1,6 +1,3 @@
-# pure react example
-https://create-react-app.dev/
+# create-react-app-example
 
-```
-npx create-react-app my-app
-```
+create-react-appを使用して作成したプロジェクト
