@@ -90,3 +90,13 @@ GraphQL クエリを介してデータを取得できるようになる
 ### GraphiQL の紹介
 
 GraphQL 統合開発環境（IDE）
+
+### ソースプラグイン（gatsby-source-filesystem）
+
+Gatsby サイトのデータは、API、データベース、CMS、ローカルファイルなど、どこからでも取得可能
+
+### GraphQL クエリを使用してページを構築
+
+## 6. Transformer プラグイン（gatsby-transformer-remark）
+
+ファイル内のデータを照会するためソースプラグインから生のコンテンツを取得し、それをより使いやすいものに変換する
